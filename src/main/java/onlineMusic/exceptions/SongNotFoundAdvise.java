@@ -24,9 +24,10 @@ public class SongNotFoundAdvise {
 //    @ResponseBody
     ResponseEntity<ErrorDto> songNotFoundHandler(Exception ex){
         ErrorDto errorDto = new ErrorDto();
+        String s =   SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         errorDto.setErrorCode("9999");
         errorDto.setErrorMessage((ex.getMessage()));
-        ResponseEntity<ErrorDto> responseEntity=new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+        ResponseEntity<ErrorDto> responseEntity=new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
         return responseEntity;
     }
 }

@@ -3,14 +3,17 @@ package onlineMusic.services;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import onlineMusic.dto.user.UserCreateUpdateRequest;
+import onlineMusic.dto.user.UserDeleteRequest;
 import onlineMusic.dto.user.UserResponse;
 import onlineMusic.entity.User;
 import onlineMusic.exceptions.NotFoundException;
 import onlineMusic.exceptions.NotUniqueUserException;
 import onlineMusic.repository.UserRepository;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -46,7 +49,18 @@ public class AppService {
         return userResponse;
     }
 
-
+//    @Secured()
+    public UserResponse deleteByName(UserDeleteRequest userDeleteRequest){
+        Optional<User> userFromDatabase = repository.findByName(userDeleteRequest.getName());
+        if (userFromDatabase.isEmpty()){
+            throw new NotFoundException("Пользователь " + userDeleteRequest.getName() + " не найден");
+        }
+        repository.deleteById(userFromDatabase.get().getId());
+        UserResponse userResponse = new UserResponse();
+        userResponse.setName(userFromDatabase.get().getName());
+        userResponse.setDescription("Пользователь успешно удален");
+        return userResponse;
+    }
 
     private UserResponse toUserResponse(User user){
         UserResponse userResponse = new UserResponse();

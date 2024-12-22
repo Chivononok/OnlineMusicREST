@@ -1,8 +1,9 @@
 package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
 import onlineMusic.entity.Subscription;
-import onlineMusic.exceptions.SubscriptionNotFoundException;
+import onlineMusic.exceptions.NotFoundException;
 import onlineMusic.repository.SubscriptionRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +27,13 @@ public class SubscriptionController {
     }
 
     @GetMapping("/subscriptions/{id}")
-        Subscription getOne(@PathVariable Long id){
+        Subscription getOne(@PathVariable @Min(0) Long id){
         return subscriptionRepository.findById(id)
-                .orElseThrow(()->new SubscriptionNotFoundException(id));
+                .orElseThrow(()->new NotFoundException("Подписка с id=" + id + " не найдена"));
     }
 
     @PutMapping("/subscriptions/{id}")
-    Subscription replaceSubscription(@RequestBody Subscription newSubscription, @PathVariable Long id){
+    Subscription replaceSubscription(@RequestBody Subscription newSubscription, @PathVariable @Min(0) Long id){
         return subscriptionRepository.findById(id)
                 .map(subscription->{
                     subscription.setActive(true);
@@ -46,7 +47,7 @@ public class SubscriptionController {
     }
 
     @DeleteMapping("/subscriptions/{id}")
-    void deleteSubscription(@PathVariable Long id){
+    void deleteSubscription(@PathVariable @Min(0) Long id){
         subscriptionRepository.deleteById(id);
     }
 

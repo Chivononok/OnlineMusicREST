@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @ControllerAdvice
 public class NotFoundAdvise {
@@ -29,6 +28,18 @@ public class NotFoundAdvise {
 
         errorDto.setErrorMessage(ex.getMessage());
         ResponseEntity<ErrorDto> responseEntity=new ResponseEntity<>(errorDto, HttpStatus.CONFLICT);
+        return responseEntity;
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ResponseBody
+    ResponseEntity<ErrorDto> songNotFoundHandler(Exception ex){
+        ErrorDto errorDto = new ErrorDto();
+        String s =   SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        errorDto.setErrorCode("9999");
+        errorDto.setErrorMessage((ex.getMessage()));
+        ResponseEntity<ErrorDto> responseEntity=new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
         return responseEntity;
     }
 }

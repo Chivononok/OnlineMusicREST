@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,22 +25,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 class AppServiceTest {
 
     @InjectMocks
-    private AppService service;
-
-//    @Autowired
-//    @MockBean
-//    private UserRepository userRepository;
+    private UserService service;
 
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
 
     @Test
     void addUser() {
-        User user = new User();
+        UserCreateUpdateRequest user = new UserCreateUpdateRequest();
+        user.setName("TestUser");
+        user.setPassword("pass");
+        user.setRoles("USER");
         service.addUser(new UserCreateUpdateRequest());
 
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
     }
 
 

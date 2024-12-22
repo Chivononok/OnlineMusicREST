@@ -7,7 +7,6 @@ import onlineMusic.dto.song.SongResponse;
 import onlineMusic.entity.Album;
 import onlineMusic.entity.Song;
 import onlineMusic.exceptions.NotFoundException;
-import onlineMusic.exceptions.SongNotFoundException;
 import onlineMusic.mapper.AlbumMapper;
 import onlineMusic.mapper.SongMapper;
 import onlineMusic.repository.AlbumRepository;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

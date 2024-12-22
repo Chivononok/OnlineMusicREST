@@ -2,14 +2,12 @@ package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import onlineMusic.dto.user.UserCreateUpdateRequest;
 import onlineMusic.dto.user.UserDeleteRequest;
 import onlineMusic.dto.user.UserResponse;
-import onlineMusic.entity.User;
-import onlineMusic.services.AppService;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
+import onlineMusic.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @AllArgsConstructor
 public class RegisterController {
-    private AppService service;
+    private UserService service;
 
 
     @PostMapping("/register")
@@ -28,12 +26,12 @@ public class RegisterController {
         return userResponse;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/register/{id}")
-    public UserResponse deleteUserById(@PathVariable Long id){
+    public UserResponse deleteUserById(@PathVariable @Min(0) Long id){
         return service.deleteUserById(id);
     }
 
-//    @Secured("ROLE_ADMIN")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/register")
     public UserResponse deleteByName(@RequestBody UserDeleteRequest userDeleteRequest){

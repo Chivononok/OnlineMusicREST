@@ -1,6 +1,7 @@
 package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import onlineMusic.dto.performer.PerformerRequest;
 import onlineMusic.dto.performer.PerformerResponse;
@@ -21,7 +22,7 @@ public class PerformerController {
     }
 
     @GetMapping("/performer/{id}")
-    public PerformerResponse getById(@PathVariable Long id){
+    public PerformerResponse getById(@PathVariable @Min(0) Long id){
         return performerService.getById(id);
     }
 

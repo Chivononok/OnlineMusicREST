@@ -1,6 +1,7 @@
 package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import onlineMusic.dto.usersubscription.UserSubscriptionRequest;
 import onlineMusic.dto.usersubscription.UserSubscriptionResponse;
@@ -18,15 +19,6 @@ import java.util.List;
 public class UserSubscriptionController {
     private final UserSubscriptionService userSubscriptionService;
 
-
-//    public UserSubscriptionController(UserSubscriptionRepository repository,
-//                                      UserRepository userRepository,
-//                                      SubscriptionRepository subscriptionRepository){
-//        this.repository = repository;
-//        this.subscriptionRepository = subscriptionRepository;
-//        this.userRepository = userRepository;
-//    }
-
     @GetMapping("/usersubscription/all")
     List<UserSubscriptionResponse> getAll(){
         return userSubscriptionService.getAll();
@@ -38,21 +30,17 @@ public class UserSubscriptionController {
     }
 
     @GetMapping("/usersubscription/{id}")
-    UserSubscriptionResponse getOne(@PathVariable Long id){
+    UserSubscriptionResponse getOne(@PathVariable @Min(0) Long id){
         return userSubscriptionService.getById(id);
-        /*
-        return repository.findById(id)
-                .orElseThrow(()-> new NotFoundException("Подписка номер " + id + " не найдена"));
-         */
     }
 
     @GetMapping("/usersubscription/users/{id}")
-    public List<UserSubscriptionResponse> getAllByUserId(@PathVariable Long id){
+    public List<UserSubscriptionResponse> getAllByUserId(@PathVariable @Min(0) Long id){
         return userSubscriptionService.getAllByUserId(id);
     }
 
     @DeleteMapping("/usersubscription/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable @Min(0) Long id){
         userSubscriptionService.deleteById(id);
     }
 }

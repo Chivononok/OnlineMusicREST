@@ -1,6 +1,7 @@
 package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import onlineMusic.dto.playlist.PlayListResponse;
 import onlineMusic.dto.playlist.PlaylistRequest;
@@ -16,7 +17,7 @@ public class PlayListsController {
     private final PlayListService playListService;
 
     @GetMapping("/playlists/user/{id}")
-    List<PlayListResponse> getPlaylistsByUserId(@PathVariable Long id){
+    List<PlayListResponse> getPlaylistsByUserId(@PathVariable @Min(0) Long id){
         return playListService.getPlaylistByUserId(id);
     }
 
@@ -26,17 +27,17 @@ public class PlayListsController {
     }
 
     @PostMapping("/playlists/addSong/{id}")
-    public void addSong(@RequestBody PlaylistRequest playlistRequest, @PathVariable Long id){
+    public void addSong(@RequestBody PlaylistRequest playlistRequest, @PathVariable @Min(0) Long id){
         playListService.addSongToPlaylist(playlistRequest, id);
     }
 
     @DeleteMapping("/playlists/removeSong/{id}")
-    public void removeSong(@RequestBody PlaylistRequest playlistRequest, @PathVariable Long id){
+    public void removeSong(@RequestBody PlaylistRequest playlistRequest, @PathVariable @Min(0) Long id){
         playListService.removeSongFromPlaylist(playlistRequest, id);
     }
 
     @DeleteMapping("/playlists/{id}")
-    public void removePlaylist(@PathVariable Long id){
+    public void removePlaylist(@PathVariable @Min(0) Long id){
         playListService.deletePlaylist(id);
     }
 }

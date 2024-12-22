@@ -1,6 +1,7 @@
 package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import onlineMusic.dto.song.SongRequest;
 import onlineMusic.dto.song.SongResponse;
@@ -31,17 +32,17 @@ public class SongController {
     }
 
     @GetMapping("/songs/{id}")
-    public SongResponse one(@PathVariable Long id){
+    public SongResponse one(@PathVariable @Min(0) Long id){
         return songService.getById(id);
     }
 
     @PutMapping("/songs/{id}")
-    public SongResponse replaceSong(@RequestBody SongRequest newSong, @PathVariable Long id){
+    public SongResponse replaceSong(@RequestBody SongRequest newSong, @PathVariable @Min(0) Long id){
         return songService.replaceSong(newSong, id);
     }
 
     @DeleteMapping("songs/{id}")
-    void deleteSong(@PathVariable Long id){
+    void deleteSong(@PathVariable @Min(0) Long id){
         songRepository.deleteById(id);
     }
 }

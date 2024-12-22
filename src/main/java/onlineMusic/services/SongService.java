@@ -6,14 +6,13 @@ import onlineMusic.dto.song.SongResponse;
 import onlineMusic.entity.Album;
 import onlineMusic.entity.Performer;
 import onlineMusic.entity.Song;
-import onlineMusic.exceptions.SongNotFoundException;
+import onlineMusic.exceptions.NotFoundException;
 import onlineMusic.mapper.SongMapper;
 import onlineMusic.repository.AlbumRepository;
 import onlineMusic.repository.PerformerRepository;
 import onlineMusic.repository.SongRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +53,7 @@ public class SongService {
 
     public SongResponse getById(Long id){
         return songRepository.findById(id).map(song-> songMapper.toSongResponse(song))
-                .orElseThrow(() -> new SongNotFoundException(id));
+                .orElseThrow(() -> new NotFoundException("Песня с id=" +id + " не найдена"));
     }
 
     public SongResponse replaceSong(SongRequest songRequest, Long id){

@@ -1,24 +1,16 @@
 package onlineMusic.aspects;
 
 import lombok.extern.slf4j.Slf4j;
-import onlineMusic.controllers.AlbumController;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Slf4j
 @Aspect
 @Component
 public class ControllerAspect {
-
-    /*
-    @Pointcut("@within(org.springframework.stereotype.Controller)")
-    public void isController(){
-    }
-     */
 
     @Pointcut("within(onlineMusic.controllers.*Controller)")
     public void isController(){}

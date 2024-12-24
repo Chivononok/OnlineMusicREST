@@ -6,6 +6,6 @@ import lombok.Data;
 public class SongRequest {
     private String name;
     private String link;
-    private Long performerid;
-    private Long albumid;
+    private Long performerId;
+    private Long albumId;
 }

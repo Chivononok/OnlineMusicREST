@@ -39,8 +39,8 @@ public class SongService {
 
     public Song addSong(SongRequest songRequest){
         Song song = new Song();
-        Performer performer = performerRepository.findById(songRequest.getPerformerid()).get();
-        Album album = albumRepository.findById(songRequest.getAlbumid()).get();
+        Performer performer = performerRepository.findById(songRequest.getPerformerId()).get();
+        Album album = albumRepository.findById(songRequest.getAlbumId()).get();
 
         song.setLink(songRequest.getLink());
         song.setName(songRequest.getName());
@@ -61,8 +61,8 @@ public class SongService {
                 .map(song -> {
                     song.setName(songRequest.getName());
                     song.setLink((songRequest.getLink()));
-                    song.setPerformer(performerRepository.findById(songRequest.getPerformerid()).get());
-                    song.setAlbum(albumRepository.findById(songRequest.getAlbumid()).get());
+                    song.setPerformer(performerRepository.findById(songRequest.getPerformerId()).get());
+                    song.setAlbum(albumRepository.findById(songRequest.getAlbumId()).get());
                     return songRepository.save(song);
                 })
                 .orElseGet(()->{

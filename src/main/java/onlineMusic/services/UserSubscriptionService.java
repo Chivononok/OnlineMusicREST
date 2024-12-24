@@ -1,7 +1,6 @@
 package onlineMusic.services;
 
 import lombok.RequiredArgsConstructor;
-
 import onlineMusic.dto.usersubscription.UserSubscriptionRequest;
 import onlineMusic.dto.usersubscription.UserSubscriptionResponse;
 import onlineMusic.entity.Subscription;
@@ -9,11 +8,8 @@ import onlineMusic.entity.User;
 import onlineMusic.entity.UserSubscription;
 import onlineMusic.exceptions.NotFoundException;
 import onlineMusic.mapper.UserSubscriptionMapper;
-import onlineMusic.repository.SubscriptionRepository;
 import onlineMusic.repository.UserSubscriptionRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

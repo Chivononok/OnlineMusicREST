@@ -37,5 +37,4 @@ public class RegisterController {
     public UserResponse deleteByName(@RequestBody UserDeleteRequest userDeleteRequest){
         return service.deleteByName(userDeleteRequest);
     }
-
 }

@@ -26,8 +26,9 @@ public class AlbumService {
     private final AlbumMapper albumMapper;
     private final SongMapper songMapper;
 
-    public void add(AlbumRequest albumRequest){
-        albumRepository.save(albumMapper.toAlbum(albumRequest));
+    public AlbumResponse add(AlbumRequest albumRequest){
+        Album album=albumRepository.save(albumMapper.toAlbum(albumRequest));
+        return albumMapper.toAlbumResponse(album);
     }
 
     public void removeById(Long id){

@@ -4,9 +4,6 @@ package onlineMusic.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.Objects;
-
 @Getter
 @Setter
 @NoArgsConstructor

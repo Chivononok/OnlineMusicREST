@@ -51,7 +51,6 @@ public class UserService {
         return userResponse;
     }
 
-
     public UserResponse deleteByName(UserDeleteRequest userDeleteRequest){
         Optional<User> userFromDatabase = userRepository.findByName(userDeleteRequest.getName());
         if (userFromDatabase.isEmpty()){
@@ -77,6 +76,4 @@ public class UserService {
         user.setName(userCreateUpdateRequest.getName());
         return user;
     }
-
-
 }

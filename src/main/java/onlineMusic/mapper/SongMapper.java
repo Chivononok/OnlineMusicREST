@@ -1,6 +1,5 @@
 package onlineMusic.mapper;
 
-import lombok.Data;
 import onlineMusic.dto.song.SongResponse;
 import onlineMusic.entity.Song;
 import org.springframework.stereotype.Component;

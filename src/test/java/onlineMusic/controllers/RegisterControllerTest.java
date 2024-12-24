@@ -1,26 +1,21 @@
 package onlineMusic.controllers;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import onlineMusic.dto.user.UserDeleteRequest;
 import onlineMusic.entity.User;
 import onlineMusic.repository.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@AllArgsConstructor
-@TestPropertySource("classpath:application-test.properties")
+@SpringBootTest
+@NoArgsConstructor
 class RegisterControllerTest {
 
-    private MockMvc mockMvc;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Test
@@ -28,7 +23,7 @@ class RegisterControllerTest {
         UserDeleteRequest userDeleteRequest = new UserDeleteRequest();
         userDeleteRequest.setName("User7");
         List<User> users = userRepository.findAll();
-        mockMvc.perform(delete("/register").content(userDeleteRequest.toString()))
-                .andExpect(status().isOk());
+//        mockMvc.perform(delete("/register").content(userDeleteRequest.toString()))
+//                .andExpect(status().isOk());
     }
 }

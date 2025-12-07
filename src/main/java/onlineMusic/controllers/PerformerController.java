@@ -1,6 +1,7 @@
 package onlineMusic.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import onlineMusic.dto.performer.PerformerRequest;
@@ -27,7 +28,7 @@ public class PerformerController {
     }
 
     @PostMapping("/performer/add")
-    public void addPerformer(@RequestBody PerformerRequest performerRequest){
+    public void addPerformer(@Valid @RequestBody PerformerRequest performerRequest){
         performerService.addPerformer(performerRequest);
     }
 

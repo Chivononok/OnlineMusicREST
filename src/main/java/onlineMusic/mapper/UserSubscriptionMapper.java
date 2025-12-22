@@ -1,7 +1,10 @@
 package onlineMusic.mapper;
 
-import org.springframework.stereotype.Component;
+import onlineMusic.dto.usersubscription.UserSubscriptionResponse;
+import onlineMusic.entity.UserSubscription;
+import org.mapstruct.Mapper;
 
-@Component
-public class UserSubscriptionMapper {
+@Mapper(componentModel = "spring")
+public interface UserSubscriptionMapper {
+    public UserSubscriptionResponse toUserSubscriptionResponse(UserSubscription userSubscription);
 }

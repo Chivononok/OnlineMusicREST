@@ -30,30 +30,15 @@ public class UserSubscriptionService {
     public List<UserSubscriptionResponse> getAllByUserId(Long id) {
         var userSubscriptions = repository.findAllByUserId(id);
         List<UserSubscriptionResponse> response = userSubscriptions.stream()
-                .map(userSubscription -> toUserSubscriptionResponse(userSubscription)).collect(Collectors.toList());
+                .map(userSubscription -> userSubscriptionMapper.toUserSubscriptionResponse(userSubscription)).collect(Collectors.toList());
         return response;
     }
 
     public List<UserSubscriptionResponse> getAll(){
         var userSubscriptions = repository.findAll();
         List<UserSubscriptionResponse> response = userSubscriptions.stream()
-                .map(userSubscription -> toUserSubscriptionResponse(userSubscription)).collect(Collectors.toList());
+                .map(userSubscription -> userSubscriptionMapper.toUserSubscriptionResponse(userSubscription)).collect(Collectors.toList());
         return response;
-    }
-
-    private UserSubscriptionResponse toUserSubscriptionResponse(UserSubscription userSubscription) {
-        UserSubscriptionResponse userSubscriptionDTO = new UserSubscriptionResponse();
-        userSubscriptionDTO.setDateEnd(userSubscription.getDateEnd());
-        userSubscriptionDTO.setDateStart(userSubscription.getDateStart());
-
-        userSubscriptionDTO.setUserId(userSubscription.getUser().getId());
-        userSubscriptionDTO.setName(userSubscription.getUser().getName());
-
-        userSubscriptionDTO.setActive(userSubscription.getSubscription().isActive());
-        userSubscriptionDTO.setDays(userSubscription.getSubscription().getDays());
-        userSubscriptionDTO.setSubscriptionId(userSubscription.getSubscription().getId());
-        userSubscriptionDTO.setSubscriptionName(userSubscription.getSubscription().getName());
-        return userSubscriptionDTO;
     }
 
     public void addUserSubscription(UserSubscriptionRequest userSubscriptionRequest){
@@ -74,7 +59,7 @@ public class UserSubscriptionService {
 
     public UserSubscriptionResponse getById(Long id){
         UserSubscription subscription = repository.findById(id).orElseThrow(()->new NotFoundException("Подписка с id="+id +" не найдена"));
-        return toUserSubscriptionResponse(subscription);
+        return userSubscriptionMapper.toUserSubscriptionResponse(subscription);
     }
 
     public void deleteById(Long id){

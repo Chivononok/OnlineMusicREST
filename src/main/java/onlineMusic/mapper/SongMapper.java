@@ -2,16 +2,11 @@ package onlineMusic.mapper;
 
 import onlineMusic.dto.song.SongResponse;
 import onlineMusic.entity.Song;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-
-@Component
-public class SongMapper {
-    public SongResponse toSongResponse(Song song){
-        SongResponse songResponse = new SongResponse();
-        songResponse.setName(song.getName());
-        songResponse.setLink(song.getLink());
-        songResponse.setPerformerid(song.getPerformer().getId());
-        return songResponse;
-    }
+@Mapper(componentModel = "spring")
+public interface SongMapper {
+    @Mapping(target = "performerid", source = "performer.id")
+    public SongResponse toSongResponse(Song song);
 }

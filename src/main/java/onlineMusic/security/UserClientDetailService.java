@@ -1,7 +1,6 @@
-package onlineMusic.services;
+package onlineMusic.security;
 
 import lombok.RequiredArgsConstructor;
-import onlineMusic.config.CustomUserDetails;
 import onlineMusic.entity.User;
 import onlineMusic.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +12,16 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserClientDetailService implements UserDetailsService {
+    private final UserRepository userRepository;
 
-    private final UserRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = repository.findByName(username);
-        return user.map(CustomUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
+        Optional<User> userDetailsOptional = userRepository.findByName(username);
+        if (userDetailsOptional.isEmpty()){
+            throw new RuntimeException();
+        }
+        return userDetailsOptional.get();
     }
+
 }

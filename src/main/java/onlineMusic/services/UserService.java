@@ -9,6 +9,7 @@ import onlineMusic.exceptions.NotFoundException;
 import onlineMusic.exceptions.NotUniqueUserException;
 import onlineMusic.mapper.UserMapper;
 import onlineMusic.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userRepository.save(user);
         } else {
-            throw new NotUniqueUserException("Пользователь " + user.getName() + " уже существует");
+            throw new NotUniqueUserException("Пользователь " + newUser.getName() + " уже существует");
         }
         UserResponse userResponse = userMapper.toUserResponse(user);
         userResponse.setDescription("Пользователь успешно добавлен");
@@ -63,5 +64,19 @@ public class UserService {
         userResponse.setName(userFromDatabase.get().getName());
         userResponse.setDescription("Пользователь успешно удален");
         return userResponse;
+    }
+
+    public UserDetails addUserJwt(UserCreateUpdateRequest newUser){
+        new User();
+        User user;
+        Optional<User> userFromDatabase = userRepository.findByName(newUser.getName());
+        if (userFromDatabase.isEmpty()){
+            user = userMapper.toUser(newUser);
+            user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            userRepository.save(user);
+        } else {
+            throw new NotUniqueUserException("Пользователь " + newUser.getName() + " уже существует");
+        }
+        return user;
     }
 }

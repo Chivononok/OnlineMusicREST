@@ -26,7 +26,7 @@ public class SongController {
         return songService.getAll(PageRequest.of(page, size));
     }
 
-    @PostMapping("/songs")
+    @PostMapping("/songs/add")
     public void newSong(@RequestBody SongRequest newSong){
         songService.addSong(newSong);
     }

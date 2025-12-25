@@ -7,7 +7,9 @@ import onlineMusic.dto.user.UserResponse;
 import onlineMusic.entity.User;
 import onlineMusic.exceptions.NotFoundException;
 import onlineMusic.exceptions.NotUniqueUserException;
+import onlineMusic.mapper.UserMapper;
 import onlineMusic.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private PasswordEncoder passwordEncoder;
 
     public Optional<User> getUserByName(String username){
@@ -28,13 +31,13 @@ public class UserService {
         User user = new User();
         Optional<User> userFromDatabase = userRepository.findByName(newUser.getName());
         if (userFromDatabase.isEmpty()){
-            user = toUser(newUser);
+            user = userMapper.toUser(newUser);
             user.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userRepository.save(user);
         } else {
-            throw new NotUniqueUserException("Пользователь " + user.getName() + " уже существует");
+            throw new NotUniqueUserException("Пользователь " + newUser.getName() + " уже существует");
         }
-        UserResponse userResponse = toUserResponse(user);
+        UserResponse userResponse = userMapper.toUserResponse(user);
         userResponse.setDescription("Пользователь успешно добавлен");
         return userResponse;
     }
@@ -63,17 +66,17 @@ public class UserService {
         return userResponse;
     }
 
-    private UserResponse toUserResponse(User user){
-        UserResponse userResponse = new UserResponse();
-        userResponse.setName(user.getName());
-        return userResponse;
-    }
-
-    private User toUser(UserCreateUpdateRequest userCreateUpdateRequest){
-        User user = new User();
-        user.setRoles(userCreateUpdateRequest.getRoles());
-        user.setPassword(userCreateUpdateRequest.getPassword());
-        user.setName(userCreateUpdateRequest.getName());
+    public UserDetails addUserJwt(UserCreateUpdateRequest newUser){
+        new User();
+        User user;
+        Optional<User> userFromDatabase = userRepository.findByName(newUser.getName());
+        if (userFromDatabase.isEmpty()){
+            user = userMapper.toUser(newUser);
+            user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            userRepository.save(user);
+        } else {
+            throw new NotUniqueUserException("Пользователь " + newUser.getName() + " уже существует");
+        }
         return user;
     }
 }

@@ -12,6 +12,13 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
+jwt:
+  access-token:
+    lifetime: 5
+  refresh-token:
+    lifetime: 10
+  secret-key: Snd0VG9rZW5Qcm9qZWN0T25saW5lTXVzaWNBdXRoZW50aWNhdGlvbjI1NmJpdA==
+
 logging:
   level:
     org.springframework.security: TRACE

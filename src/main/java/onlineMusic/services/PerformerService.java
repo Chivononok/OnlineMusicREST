@@ -18,9 +18,10 @@ public class PerformerService {
     private final PerformerRepository performerRepository;
     private final PerformerMapper performerMapper;
 
-    public void addPerformer(PerformerRequest performerRequest){
+    public Performer addPerformer(PerformerRequest performerRequest){
         Performer performer = performerMapper.toPerformer(performerRequest);
         performerRepository.save(performer);
+        return performer;
     }
 
     public List<PerformerResponse> getAll(){
